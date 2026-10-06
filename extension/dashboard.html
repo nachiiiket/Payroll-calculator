@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payroll - Setup &amp; History</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body class="dashboard-body">
+<div class="dash">
+  <header class="dash-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">$</span>
+      <div class="brand-text">
+        <h1>Payroll Dashboard</h1>
+        <span class="brand-sub">One-time setup, employees and salary history</span>
+      </div>
+    </div>
+    <span id="verifyBadge" class="badge badge-none">Not verified</span>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="setup" type="button">Setup</button>
+    <button class="tab-btn" data-tab="employees" type="button">Employees</button>
+    <button class="tab-btn" data-tab="history" type="button">History</button>
+  </nav>
+
+  <main>
+    <section class="tab-panel active" id="tab-setup">
+      <div class="card">
+        <div class="card-title">Employer / Sender</div>
+        <div class="grid2">
+          <label>Sender email (Gmail account)
+            <input type="email" id="senderEmail" placeholder="employer@gmail.com" autocomplete="off">
+          </label>
+          <label>Sign-off name
+            <input type="text" id="senderName" placeholder="Your Name" autocomplete="off">
+          </label>
+          <label>Company
+            <input type="text" id="company" placeholder="Chatham Burgers" autocomplete="off">
+          </label>
+          <label>Send speed
+            <select id="speed">
+              <option value="3000">Slow (3s)</option>
+              <option value="2000">Medium (2s)</option>
+              <option value="1000" selected>Fast (1s)</option>
+              <option value="500">Quick (0.5s)</option>
+              <option value="0">Instant</option>
+            </select>
+          </label>
+        </div>
+        <div class="row">
+          <button id="btnVerify" class="btn btn-secondary" type="button">Verify sender account</button>
+          <label class="checkbox"><input type="checkbox" id="skipSent" checked> Skip already processed periods</label>
+          <label class="checkbox"><input type="checkbox" id="claimBpa" checked> Employee claims 2026 basic personal amount (TD1)</label>
+        </div>
+        <div id="verifyAlert" class="alert alert-error" hidden></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Email template</div>
+        <label>Subject
+          <input type="text" id="subjectTpl" autocomplete="off">
+        </label>
+        <div class="chips" id="chips"></div>
+        <label>Body
+          <textarea id="bodyTpl" rows="14" spellcheck="true"></textarea>
+        </label>
+        <div class="row">
+          <button id="btnDeductBlock" class="btn btn-outline btn-sm" type="button">Insert deductions block</button>
+          <button id="btnResetTpl" class="btn btn-outline btn-sm" type="button">Reset template</button>
+          <span class="hint">Saved automatically. The extension window uses this template for every draft.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-employees">
+      <div class="card">
+        <div class="card-title">Employees <span class="hint">name, email and hourly rate are entered once</span></div>
+        <div class="table-wrap">
+          <table id="empTable">
+            <thead>
+              <tr>
+                <th class="num">#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Hourly rate ($/hr)</th>
+                <th class="ytd">Prior YTD ($)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="empBody"></tbody>
+          </table>
+        </div>
+        <div class="row">
+          <button id="btnAddEmp" class="btn btn-secondary btn-sm" type="button">+ Add employee</button>
+          <span class="hint">Prior YTD = gross earned by the employee elsewhere before this year's runs here (used for CPP / EI ceilings).</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-history">
+      <div class="card">
+        <div class="card-title">Salary &amp; deductions history</div>
+        <div class="row controls">
+          <label class="inline">View
+            <select id="histView">
+              <option value="runs">Every run</option>
+              <option value="totals">Totals per employee</option>
+            </select>
+          </label>
+          <label class="inline">Employee
+            <select id="histEmp"><option value="">All employees</option></select>
+          </label>
+          <label class="inline">Year
+            <select id="histYear"><option value="">All years</option></select>
+          </label>
+          <span class="spacer"></span>
+          <button id="btnExportCsv" class="btn btn-outline btn-sm" type="button">Export CSV</button>
+          <button id="btnClearHistory" class="btn btn-outline btn-sm" type="button" title="Forget which runs were already processed">Reset sent log</button>
+        </div>
+
+        <div class="table-wrap hist-wrap">
+          <table id="histTable">
+            <thead id="histHead"></thead>
+            <tbody id="histBody"></tbody>
+            <tfoot id="histFoot"></tfoot>
+          </table>
+        </div>
+        <div class="row">
+          <span class="hint" id="histSummary"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="utils/canada.js"></script>
+<script src="utils/storage.js"></script>
+<script src="utils/template.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><link rel="stylesheet" href="styles.css"></head>
+<body>
+<div class="app app-run">
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">$</span>
+      <div class="brand-text">
+        <h1>Payroll Calculator</h1>
+        <span class="brand-sub">CRA 2026 &middot; Ontario</span>
+      </div>
+    </div>
+    <span id="verifyBadge" class="badge badge-none">Not verified</span>
+    <button id="btnDashboard" class="btn btn-icon" type="button" title="Setup &amp; history dashboard" aria-label="Open setup and history dashboard">&#9881;</button>
+  </header>
+
+  <div id="verifyAlert" class="alert alert-error" hidden></div>
+
+  <section class="card">
+    <div class="card-title">Run payroll</div>
+    <div class="grid2">
+      <label>Employee
+        <select id="empSel"></select>
+      </label>
+      <label>Hourly rate
+        <input type="text" id="rate" readonly placeholder="&mdash;">
+      </label>
+      <label>Working hours
+        <input type="text" id="hours" placeholder="21.75 or 21:45" autocomplete="off">
+      </label>
+      <label>Employee email
+        <input type="text" id="empEmail" readonly placeholder="&mdash;">
+      </label>
+      <label>From
+        <input type="date" id="dateFrom">
+      </label>
+      <label>To
+        <input type="date" id="dateTo">
+      </label>
+    </div>
+    <div class="row">
+      <span class="period-chip" id="periodText">Pick the pay period dates</span>
+      <span class="hint">Hours accept 21.75, 21:45 or 21 hrs 45 mins</span>
+    </div>
+    <div class="row">
+      <button id="btnCalculate" class="btn btn-secondary" type="button">Calculate</button>
+      <span class="hint">Set up employees, employer details and the email template in the dashboard (&#9881;).</span>
+    </div>
+  </section>
+
+  <section class="card" id="calcCard">
+    <div class="card-title">Calculation <span class="hint" id="calcSub">2026 CRA &middot; Ontario</span></div>
+    <div class="stats" id="stats">
+      <div class="stat"><span class="stat-label">Gross pay</span><span class="stat-value" id="sGross">&mdash;</span></div>
+      <div class="stat"><span class="stat-label">CPP</span><span class="stat-value" id="sCpp">&mdash;</span></div>
+      <div class="stat"><span class="stat-label">EI</span><span class="stat-value" id="sEi">&mdash;</span></div>
+      <div class="stat"><span class="stat-label">Income tax</span><span class="stat-value" id="sTax">&mdash;</span></div>
+      <div class="stat stat-net"><span class="stat-label">Net pay</span><span class="stat-value" id="sNet">&mdash;</span></div>
+    </div>
+    <div class="row" id="calcNote" hidden>
+      <span class="hint" id="calcYtd"></span>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-title">Email</div>
+    <div class="row">
+      <label class="inline">Action
+        <select id="sendMode">
+          <option value="draft">Save as draft</option>
+          <option value="send">Send email</option>
+        </select>
+      </label>
+      <button id="btnRun" class="btn btn-primary" type="button">Create draft email</button>
+      <button id="btnStop" class="btn btn-danger" type="button" style="display:none">Stop</button>
+    </div>
+  </section>
+
+  <section class="card card-compact">
+    <div class="card-title">Log</div>
+    <div id="log" class="log"></div>
+  </section>
+</div>
+<script src="utils/canada.js"></script>
+<script src="utils/storage.js"></script>
+<script src="utils/template.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

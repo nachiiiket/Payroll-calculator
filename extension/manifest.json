@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Payroll Calculator",
+  "version": "1.0.0",
+  "description": "Calculate payroll for employees and draft/send pay emails through Gmail.",
+  "permissions": ["storage", "tabs", "notifications"],
+  "host_permissions": ["https://mail.google.com/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Payroll Calculator"
+  },
+  "options_ui": {
+    "page": "dashboard.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["gmail-compose.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["panel.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "styles.css",
+        "popup.js",
+        "utils/canada.js",
+        "utils/storage.js",
+        "utils/template.js"
+      ],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ]
+}
