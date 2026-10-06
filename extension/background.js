@@ -11,8 +11,7 @@ function log(port, type, message, extra) {
 }
 
 function notify(title, message) {
-  const iconUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAdSURBVDhPY5BsD/lPCWZAFyAVjxowasCoAYPFAACX3PMQniemnwAAAABJRU5ErkJggg==";
-  chrome.notifications.create({ type: "basic", iconUrl, title, message });
+  chrome.notifications.create({ type: "basic", iconUrl: "icons/icon-48.png", title, message });
 }
 
 async function getGmailTab() {
